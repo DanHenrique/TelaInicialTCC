@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     TextView luminostom;
     TextView temptom;
     TextView severitytom;
+    String host = "10.0.2.2";
+    String port = "1099";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,11 +92,11 @@ public class MainActivity extends AppCompatActivity {
         Button destom = findViewById(R.id.destom);
 
 
+
         try {
             SharedPreferences settings = getSharedPreferences(
                     "jadeChatPrefsFile", 0);
-            String host = "10.0.2.2";
-            String port = "1099";
+
             MainActivity.this.startChat(nickname, host, port, agentStartupCallback);
 
         } catch (Exception e) {
@@ -175,6 +177,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onFailure(Throwable throwable) {
             logger.log(Level.INFO, "Nickname already in use!");
+        }
+    };
+
+    private RuntimeCallback<Void> containerStartupCallback = new RuntimeCallback<Void>() {
+        @Override
+        public void onSuccess(Void aVoid) {
+
+        }
+
+        @Override
+        public void onFailure(Throwable throwable) {
+
         }
     };
 
@@ -350,4 +364,24 @@ public class MainActivity extends AppCompatActivity {
             expandableviewtom.setVisibility(View.GONE);
         }
     }
+    @Override
+    protected void onStop () {
+        super.onStop();
+        try {
+            AgentController ac = MicroRuntime.getAgent(nickname);
+            moradorInterface = ac.getO2AInterface(MoradorInterface.class);
+            moradorInterface.mataMorador();
+            microRuntimeServiceBinder.stopAgentContainer(containerStartupCallback);
+        } catch (StaleProxyException e) {
+            e.printStackTrace();
+        } catch (ControllerException e){
+            e.printStackTrace();
+        }
+    }
+    @Override
+    protected void onResume () {
+        super.onResume();
+        MainActivity.this.startChat(nickname, host, port, agentStartupCallback);
+    }
+
 }

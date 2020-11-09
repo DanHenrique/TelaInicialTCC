@@ -10,4 +10,5 @@ public interface MoradorInterface {
     void enviaMensagem(String entidade, String dominio, String servico);
 
     void receberMensagem(TextView luminosLamp, TextView tempLamp, TextView severityLamp, TextView luminosTom, TextView tempTom, TextView severityTom );
+    void mataMorador();
 }

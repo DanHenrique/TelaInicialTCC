@@ -65,4 +65,18 @@ public class Morador extends Agent implements MoradorInterface {
         });
     }
 
+    @Override
+    public void mataMorador() {
+        addBehaviour(new OneShotBehaviour() {
+            @Override
+            public void action() {
+                try {
+                   doDelete();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 }
