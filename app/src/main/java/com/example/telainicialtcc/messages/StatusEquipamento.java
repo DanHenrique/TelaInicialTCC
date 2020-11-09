@@ -15,7 +15,10 @@ public class StatusEquipamento implements Serializable {
     public int brightness;
     @JsonProperty
     public int temperature;
+
     // Métodos
+    public StatusEquipamento(){
+    }
 
     public StatusEquipamento(String entity, int temperature, int brightness) {
         this.setEntityID(entity);

@@ -22,6 +22,7 @@ import androidx.cardview.widget.CardView;
 
 import com.example.telainicialtcc.agents.Morador;
 import com.example.telainicialtcc.agents.MoradorInterface;
+import com.example.telainicialtcc.messages.StatusEquipamento;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.logging.Level;
@@ -41,6 +42,7 @@ import jade.wrapper.StaleProxyException;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static MainActivity instance;
     private MicroRuntimeServiceBinder microRuntimeServiceBinder;
     private ServiceConnection serviceConnection;
     private Logger logger = Logger.getJADELogger(this.getClass().getName());
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        instance = this;
 
         setSupportActionBar(toolbar);
         nickname = "Morador";
@@ -93,27 +97,17 @@ public class MainActivity extends AppCompatActivity {
             String port = "1099";
             MainActivity.this.startChat(nickname, host, port, agentStartupCallback);
 
-            AgentController ac = MicroRuntime.getAgent(nickname);
-
-            moradorInterface = ac.getO2AInterface(MoradorInterface.class);
-
-            moradorInterface.receberMensagem(luminoslamp, templamp, severitylamp, luminostom, temptom, severitytom);
-
-        } catch (StaleProxyException e) {
-            e.printStackTrace();
-        } catch (ControllerException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Unexpected exception creating chat agent!");
-            infoTextView.setText("Unexpected error");
         }
 
         liglamp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
+                    AgentController ac = MicroRuntime.getAgent(nickname);
 
-
+                    moradorInterface = ac.getO2AInterface(MoradorInterface.class);
                     moradorInterface.enviaMensagem("light.lampada", "homeassistant", "turn_on");
                 } catch (O2AException e) {
                     logger.log(Level.SEVERE, "Unexpected exception creating chat agent -O2AExcp!");
@@ -127,7 +121,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
+                    AgentController ac = MicroRuntime.getAgent(nickname);
 
+                    moradorInterface = ac.getO2AInterface(MoradorInterface.class);
                     moradorInterface.enviaMensagem("switch.tomada", "homeassistant", "turn_on");
                 } catch (O2AException e) {
                     logger.log(Level.SEVERE, "Unexpected exception creating chat agent -O2AExcp!");
@@ -141,7 +137,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
+                    AgentController ac = MicroRuntime.getAgent(nickname);
 
+                    moradorInterface = ac.getO2AInterface(MoradorInterface.class);
                     moradorInterface.enviaMensagem("light.lampada", "homeassistant", "turn_off");
                 } catch (O2AException e) {
                     logger.log(Level.SEVERE, "Unexpected exception creating chat agent -O2AExcp!");
@@ -155,7 +153,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
+                    AgentController ac = MicroRuntime.getAgent(nickname);
 
+                    moradorInterface = ac.getO2AInterface(MoradorInterface.class);
                     moradorInterface.enviaMensagem("switch.tomada", "homeassistant", "turn_off");
                 } catch (O2AException e) {
                     logger.log(Level.SEVERE, "Unexpected exception creating chat agent -O2AExcp!");
@@ -281,6 +281,12 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             agentStartupCallback.onSuccess(MicroRuntime
                                     .getAgent(nickname));
+
+                            AgentController ac = MicroRuntime.getAgent(nickname);
+
+                            moradorInterface = ac.getO2AInterface(MoradorInterface.class);
+
+                            moradorInterface.receberMensagem(luminoslamp, templamp, severitylamp, luminostom, temptom, severitytom);
                         } catch (ControllerException e) {
                             // Should never happen
                             agentStartupCallback.onFailure(e);
@@ -294,6 +300,32 @@ public class MainActivity extends AppCompatActivity {
                         agentStartupCallback.onFailure(throwable);
                     }
                 });
+    }
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
+
+    public void atualizarStatus(final StatusEquipamento status) {
+
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                if (status.entityID.equals("light.lampada")){
+                    luminoslamp.setText("Luminosidade: "+  status.getBrightness());
+                    templamp.setText("Temperatura: " + status.getTemperature());
+                    severitylamp.setText("Criticitade: "+ status.getSeverity());
+
+                }else{
+                    luminostom.setText("Luminosidade: "+  status.getBrightness());
+                    temptom.setText("Temperatura: " + status.getTemperature());
+                    severitytom.setText("Criticitade: "+ status.getSeverity());
+                }
+            }
+        });
+
+
     }
 
     public void showmore(View view) {

@@ -3,22 +3,15 @@ package com.example.telainicialtcc.agents;
 import android.widget.TextView;
 
 import com.example.telainicialtcc.MainActivity;
-import com.example.telainicialtcc.R;
 import com.example.telainicialtcc.messages.Instrucao;
 import com.example.telainicialtcc.messages.StatusEquipamento;
 import com.fasterxml.jackson.core.JsonProcessingException;
-
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.util.logging.Level;
 
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
-import jade.util.Logger;
 
 public class Morador extends Agent implements MoradorInterface {
 
@@ -59,18 +52,8 @@ public class Morador extends Agent implements MoradorInterface {
                         String json = msg.getContent();
 
                         StatusEquipamento status = objectMapper.readValue(json, StatusEquipamento.class);
-
-                        if (status.entityID == "light.lampada"){
-                            luminosLamp.setText("Luminosidade: "+  status.getBrightness());
-                            tempLamp.setText("Temperatura: " + status.getTemperature());
-                            severityLamp.setText("Criticitade: "+ status.getSeverity());
-                        }else{
-                            luminosTom.setText("Luminosidade: "+  status.getBrightness());
-                            tempTom.setText("Temperatura: " + status.getTemperature());
-                            severityTom.setText("Criticitade: "+ status.getSeverity());
-                        }
-
-
+                        MainActivity ma = MainActivity.getInstance();
+                        ma.atualizarStatus(status);
 
                     } else {
                         block();
