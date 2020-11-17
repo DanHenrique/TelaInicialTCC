@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,194 +13,332 @@
         android:layout_height="44dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        />
+        android:theme="?attr/actionBarTheme" />
 
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
-        android:layout_marginLeft="-412dp"
-        app:cardElevation="6dp"
-        android:id="@+id/card_expansivo"
-        android:onClick="showmore">
-
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_expansivo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/lampada"
-                    android:layout_width="wrap_content"
-                    android:layout_height="98dp"
-                    android:layout_marginStart="5dp"
-                    app:srcCompat="@drawable/lampadademesa" />
+                android:layout_marginTop="20dp"
+                android:onClick="showmore"
+                app:cardElevation="6dp">
 
 
-
-                <Button
-                    android:id="@+id/liglamp"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="190dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Ligar" />
+                    android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/deslamp"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="desligar"
-                    android:visibility="visible"
-                    android:layout_marginTop="-48dp"
-                    android:layout_marginLeft="290dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/showmore"
-                    android:layout_width="184dp"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="-49dp"
-                    android:paddingTop="10dp"
-                    android:text="Status"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                        <ImageView
+                            android:id="@+id/lampada"
+                            android:layout_width="wrap_content"
+                            android:layout_height="98dp"
+                            android:layout_marginStart="5dp"
+                            app:srcCompat="@drawable/lampadademesa" />
 
-            </LinearLayout>
 
-            <LinearLayout
+                        <Button
+                            android:id="@+id/liglamp"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="190dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Ligar" />
+
+                        <Button
+                            android:id="@+id/deslamp"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="290dp"
+                            android:layout_marginTop="-48dp"
+                            android:text="desligar"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/showmore"
+                            android:layout_width="184dp"
+                            android:layout_height="45dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="-49dp"
+                            android:paddingTop="10dp"
+                            android:text="Status"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/expandable_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/severitylamp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Criticidade: Baixa"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                        <TextView
+                            android:id="@+id/templamp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Temperatura: ?"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                        <TextView
+                            android:id="@+id/luminoslamp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Luminosidade: ?%"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_expansivo_tom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/expandable_view"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:onClick="showmoreTom"
+                app:cardElevation="6dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Criticidade: Baixa"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:id="@+id/severitylamp"/>
-                <TextView
-                    android:layout_width="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/tom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="98dp"
+                            android:layout_marginStart="5dp"
+                            app:srcCompat="@drawable/tomadaeletrica" />
+
+
+                        <Button
+                            android:id="@+id/ligtom"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="190dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Ligar" />
+
+                        <Button
+                            android:id="@+id/destom"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="290dp"
+                            android:layout_marginTop="-48dp"
+                            android:text="desligar"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:layout_width="184dp"
+                            android:layout_height="45dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="-49dp"
+                            android:paddingTop="10dp"
+                            android:text="Status"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/expandable_view_tom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/severitytom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Criticidade: Baixa"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                        <TextView
+                            android:id="@+id/temptom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Temperatura: ?"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                        <TextView
+                            android:id="@+id/luminostom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Luminosidade: ?%"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_expansivo_arcond"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardElevation="6dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Temperatura: ?"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:id="@+id/templamp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Luminosidade: ?%"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:id="@+id/luminoslamp"/>
-            </LinearLayout>
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/arcond"
+                            android:layout_width="wrap_content"
+                            android:layout_height="98dp"
+                            android:layout_marginStart="5dp"
+                            android:onClick="showmorearcond"
+                            app:srcCompat="@drawable/arcondicionado" />
+
+
+                        <Button
+                            android:id="@+id/ligarcond"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="190dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Ligar"
+                            app:iconTint="#6200EA" />
+
+                        <Button
+                            android:id="@+id/desarcon"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="290dp"
+                            android:layout_marginTop="-48dp"
+                            android:text="desligar"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="45dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="-49dp"
+                            android:paddingTop="10dp"
+                            android:text="Status"
+                            android:onClick="showmorearcond"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                        <TextView
+                            android:id="@+id/temperaturaarcond"
+                            android:layout_width="wrap_content"
+                            android:layout_height="45dp"
+                            android:layout_marginLeft="90dp"
+                            android:layout_marginTop="-46dp"
+                            android:paddingTop="10dp"
+                            android:text="24"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+                        <TextView
+                            android:id="@+id/Celsius"
+                            android:layout_width="wrap_content"
+                            android:layout_height="45dp"
+                            android:layout_marginLeft="119dp"
+                            android:layout_marginTop="-46dp"
+                            android:paddingTop="10dp"
+                            android:text="°C"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                        <ImageView
+                            android:id="@+id/aumarcond"
+                            android:layout_width="11dp"
+                            android:layout_height="46dp"
+                            android:layout_marginLeft="75dp"
+                            android:layout_marginTop="-40dp"
+                            android:onClick="abaixatemp"
+                            app:srcCompat="@drawable/setaparaesquerda" />
+
+                        <ImageView
+                            android:id="@+id/descarcond"
+                            android:layout_width="11dp"
+                            android:layout_height="46dp"
+                            android:layout_marginLeft="143dp"
+                            android:layout_marginTop="-47dp"
+                            android:onClick="aumentatemp"
+                            app:srcCompat="@drawable/setaparadireita" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/expandable_view_arcond"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/severityarcond"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Criticidade: Baixa"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                        <TextView
+                            android:id="@+id/temparcond"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Temperatura: ?"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                        <TextView
+                            android:id="@+id/luminosarcond"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Luminosidade: ?%"
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
 
         </LinearLayout>
-
-
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="370dp"
-        android:layout_marginLeft="-412dp"
-        app:cardElevation="6dp"
-        android:id="@+id/card_expansivo_tom"
-        android:onClick="showmoreTom">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/tom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="98dp"
-                    android:layout_marginStart="5dp"
-                    app:srcCompat="@drawable/tomadaeletrica" />
-
-
-
-                <Button
-                    android:id="@+id/ligtom"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="190dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Ligar" />
-
-                <Button
-                    android:id="@+id/destom"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="desligar"
-                    android:visibility="visible"
-                    android:layout_marginTop="-48dp"
-                    android:layout_marginLeft="290dp"/>
-
-                <TextView
-                    android:layout_width="184dp"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="-49dp"
-                    android:paddingTop="10dp"
-                    android:text="Status"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/expandable_view_tom"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Criticidade: Baixa"
-                    android:id="@+id/severitytom"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Temperatura: ?"
-                    android:id="@+id/temptom"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Luminosidade: ?%"
-                    android:id="@+id/luminostom"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-
-    </androidx.cardview.widget.CardView>
-
-
+    </ScrollView>
 
 </LinearLayout>
+

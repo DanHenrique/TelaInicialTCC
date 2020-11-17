@@ -51,15 +51,18 @@ public class MainActivity extends AppCompatActivity {
     private MoradorInterface moradorInterface;
     LinearLayout expandableview;
     LinearLayout expandableviewtom;
+    LinearLayout expandableviewarcond;
     TextView textview;
     CardView cardView;
     CardView cardViewTom;
+    CardView cardViewArcond;
     TextView luminoslamp;
     TextView templamp;
     TextView severitylamp;
     TextView luminostom;
     TextView temptom;
     TextView severitytom;
+    TextView temperaturaarcond;
     String host = "10.0.2.2";
     String port = "1099";
 
@@ -76,15 +79,18 @@ public class MainActivity extends AppCompatActivity {
 
         expandableview = findViewById(R.id.expandable_view);
         expandableviewtom = findViewById(R.id.expandable_view_tom);
+        expandableviewarcond = findViewById(R.id.expandable_view_arcond);
         textview = findViewById(R.id.showmore);
         cardView = findViewById(R.id.card_expansivo);
         cardViewTom = findViewById(R.id.card_expansivo_tom);
+        cardViewArcond = findViewById(R.id.card_expansivo_arcond);
         luminoslamp = findViewById(R.id.luminoslamp);
         templamp = findViewById(R.id.templamp);
         severitylamp = findViewById(R.id.severitylamp);
         luminostom = findViewById(R.id.luminostom);
         temptom = findViewById(R.id.temptom);
         severitytom = findViewById(R.id.severitytom);
+        temperaturaarcond = findViewById(R.id.temperaturaarcond);
 
         Button liglamp = findViewById(R.id.liglamp);
         Button deslamp = findViewById(R.id.deslamp);
@@ -364,6 +370,28 @@ public class MainActivity extends AppCompatActivity {
             expandableviewtom.setVisibility(View.GONE);
         }
     }
+    public void showmorearcond(View view) {
+        if (expandableviewarcond.getVisibility() == View.GONE) {
+            TransitionManager.beginDelayedTransition(cardViewArcond, new AutoTransition());
+            expandableviewarcond.setVisibility(View.VISIBLE);
+        } else {
+            TransitionManager.beginDelayedTransition(cardViewArcond, new AutoTransition());
+            expandableviewarcond.setVisibility(View.GONE);
+        }
+    }
+    public void abaixatemp(View view) {
+        int temperatura;
+
+       temperatura = Integer.parseInt(temperaturaarcond.getText().toString());
+       temperatura--;
+       temperaturaarcond.setText(String.valueOf(temperatura));
+    }
+    public void aumentatemp(View view) {
+        int temperatura;
+        temperatura = Integer.parseInt(temperaturaarcond.getText().toString());
+        temperatura++;
+        temperaturaarcond.setText(String.valueOf(temperatura));
+    }
     @Override
     protected void onStop () {
         super.onStop();
@@ -383,5 +411,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         MainActivity.this.startChat(nickname, host, port, agentStartupCallback);
     }
+
+
 
 }
