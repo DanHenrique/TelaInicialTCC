@@ -101,7 +101,7 @@
                             android:id="@+id/templamp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Temperatura: ?"
+                            android:text="Temperatura: ? °C"
                             android:textAppearance="?attr/textAppearanceHeadline6" />
 
                         <TextView
@@ -285,7 +285,7 @@
                             android:textAppearance="?attr/textAppearanceHeadline6" />
 
                         <ImageView
-                            android:id="@+id/aumarcond"
+                            android:id="@+id/dimarcond"
                             android:layout_width="11dp"
                             android:layout_height="46dp"
                             android:layout_marginLeft="75dp"
@@ -294,7 +294,7 @@
                             app:srcCompat="@drawable/setaparaesquerda" />
 
                         <ImageView
-                            android:id="@+id/descarcond"
+                            android:id="@+id/aumarcond"
                             android:layout_width="11dp"
                             android:layout_height="46dp"
                             android:layout_marginLeft="143dp"

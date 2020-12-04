@@ -42,7 +42,7 @@ public class Morador extends Agent implements MoradorInterface {
         });
     }
 
-    public void receberMensagem(final TextView luminosLamp, final TextView tempLamp, final TextView severityLamp, final TextView luminosTom, final TextView tempTom , final TextView severityTom){
+    public void receberMensagem(final TextView luminosLamp, final TextView tempLamp, final TextView severityLamp, final TextView luminosTom, final TextView tempTom , final TextView severityTom, final TextView luminosarcond, final TextView temparcond , final TextView severityarcond){
         addBehaviour(new CyclicBehaviour() {
             @Override
             public void action() {

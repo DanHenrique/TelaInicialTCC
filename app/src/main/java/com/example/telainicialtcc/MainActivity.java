@@ -23,7 +23,6 @@ import androidx.cardview.widget.CardView;
 import com.example.telainicialtcc.agents.Morador;
 import com.example.telainicialtcc.agents.MoradorInterface;
 import com.example.telainicialtcc.messages.StatusEquipamento;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.logging.Level;
 
@@ -63,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
     TextView temptom;
     TextView severitytom;
     TextView temperaturaarcond;
+    TextView temparcond;
+    TextView severityarcond;
+    TextView luminosarcond;
     String host = "10.0.2.2";
     String port = "1099";
 
@@ -91,11 +93,16 @@ public class MainActivity extends AppCompatActivity {
         temptom = findViewById(R.id.temptom);
         severitytom = findViewById(R.id.severitytom);
         temperaturaarcond = findViewById(R.id.temperaturaarcond);
+        temparcond = findViewById(R.id.temparcond);
+        severityarcond = findViewById(R.id.severityarcond);
+        luminosarcond = findViewById(R.id.luminosarcond);
 
         Button liglamp = findViewById(R.id.liglamp);
         Button deslamp = findViewById(R.id.deslamp);
         Button ligtom = findViewById(R.id.ligtom);
         Button destom = findViewById(R.id.destom);
+        Button ligarcond = findViewById(R.id.ligarcond);
+        Button descond = findViewById(R.id.desarcon);
 
 
 
@@ -173,6 +180,39 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        ligarcond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    AgentController ac = MicroRuntime.getAgent(nickname);
+
+                    moradorInterface = ac.getO2AInterface(MoradorInterface.class);
+                    moradorInterface.enviaMensagem("ar.condicionado", "homeassistant", "turn_on");
+                } catch (O2AException e) {
+                    logger.log(Level.SEVERE, "Unexpected exception creating chat agent -O2AExcp!");
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, "Unexpected exception creating chat agent!");
+                    infoTextView.setText("Unexpected error");
+                }
+            }
+        });
+        descond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    AgentController ac = MicroRuntime.getAgent(nickname);
+
+                    moradorInterface = ac.getO2AInterface(MoradorInterface.class);
+                    moradorInterface.enviaMensagem("ar.condicionado", "homeassistant", "turn_off");
+                } catch (O2AException e) {
+                    logger.log(Level.SEVERE, "Unexpected exception creating chat agent -O2AExcp!");
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, "Unexpected exception creating chat agent!");
+                    infoTextView.setText("Unexpected error");
+                }
+            }
+        });
+
     }
 
     private RuntimeCallback<AgentController> agentStartupCallback = new RuntimeCallback<AgentController>() {
@@ -306,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
 
                             moradorInterface = ac.getO2AInterface(MoradorInterface.class);
 
-                            moradorInterface.receberMensagem(luminoslamp, templamp, severitylamp, luminostom, temptom, severitytom);
+                            moradorInterface.receberMensagem(luminoslamp, templamp, severitylamp, luminostom, temptom, severitytom,  luminosarcond, temparcond, severityarcond);
                         } catch (ControllerException e) {
                             // Should never happen
                             agentStartupCallback.onFailure(e);
@@ -334,13 +374,17 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 if (status.entityID.equals("light.lampada")){
                     luminoslamp.setText("Luminosidade: "+  status.getBrightness());
-                    templamp.setText("Temperatura: " + status.getTemperature());
+                    templamp.setText("Temperatura: " + status.getTemperature() +"°C");
                     severitylamp.setText("Criticitade: "+ status.getSeverity());
 
-                }else{
+                }else if (status.entityID.equals("switch.tomada")){
                     luminostom.setText("Luminosidade: "+  status.getBrightness());
-                    temptom.setText("Temperatura: " + status.getTemperature());
+                    temptom.setText("Temperatura: " + status.getTemperature() +"°C");
                     severitytom.setText("Criticitade: "+ status.getSeverity());
+                }else{
+                    temperaturaarcond.setText("Temperatura: "+  status.getBrightness() +"°C");
+                    luminosarcond.setText("Luminosidade: " + status.getTemperature());
+                    severityarcond.setText("Criticitade: "+ status.getSeverity());
                 }
             }
         });
@@ -381,16 +425,41 @@ public class MainActivity extends AppCompatActivity {
     }
     public void abaixatemp(View view) {
         int temperatura;
+        temperatura = Integer.parseInt(temperaturaarcond.getText().toString());
+        temperatura--;
+        temperaturaarcond.setText(String.valueOf(temperatura));
 
-       temperatura = Integer.parseInt(temperaturaarcond.getText().toString());
-       temperatura--;
-       temperaturaarcond.setText(String.valueOf(temperatura));
+        try {
+            AgentController ac = MicroRuntime.getAgent(nickname);
+
+            moradorInterface = ac.getO2AInterface(MoradorInterface.class);
+            moradorInterface.enviaMensagem("ar.condicionado", "homeassistant", "change_state/" + String.valueOf(temperatura));
+        } catch (O2AException e) {
+            logger.log(Level.SEVERE, "Unexpected exception creating chat agent -O2AExcp!");
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Unexpected exception creating chat agent!");
+            infoTextView.setText("Unexpected error");
+        }
+
+
     }
     public void aumentatemp(View view) {
         int temperatura;
         temperatura = Integer.parseInt(temperaturaarcond.getText().toString());
         temperatura++;
         temperaturaarcond.setText(String.valueOf(temperatura));
+
+        try {
+            AgentController ac = MicroRuntime.getAgent(nickname);
+
+            moradorInterface = ac.getO2AInterface(MoradorInterface.class);
+            moradorInterface.enviaMensagem("ar.condicionado", "homeassistant", "change_state/" + String.valueOf(temperatura));
+        } catch (O2AException e) {
+            logger.log(Level.SEVERE, "Unexpected exception creating chat agent -O2AExcp!");
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Unexpected exception creating chat agent!");
+            infoTextView.setText("Unexpected error");
+        }
     }
     @Override
     protected void onStop () {
