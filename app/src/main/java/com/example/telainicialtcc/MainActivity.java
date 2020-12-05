@@ -382,7 +382,7 @@ public class MainActivity extends AppCompatActivity {
                     temptom.setText("Temperatura: " + status.getTemperature() +"°C");
                     severitytom.setText("Criticitade: "+ status.getSeverity());
                 }else{
-                    temperaturaarcond.setText("Temperatura: "+  status.getBrightness() +"°C");
+                    temparcond.setText("Temperatura: "+  status.getBrightness() +"°C");
                     luminosarcond.setText("Luminosidade: " + status.getTemperature());
                     severityarcond.setText("Criticitade: "+ status.getSeverity());
                 }
@@ -464,16 +464,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop () {
         super.onStop();
-        try {
-            AgentController ac = MicroRuntime.getAgent(nickname);
-            moradorInterface = ac.getO2AInterface(MoradorInterface.class);
-            moradorInterface.mataMorador();
-            microRuntimeServiceBinder.stopAgentContainer(containerStartupCallback);
-        } catch (StaleProxyException e) {
-            e.printStackTrace();
-        } catch (ControllerException e){
-            e.printStackTrace();
-        }
+        microRuntimeServiceBinder.stopAgentContainer(containerStartupCallback);
     }
     @Override
     protected void onResume () {
